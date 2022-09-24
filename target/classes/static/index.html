@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Fibonacci REST</title>
+    <script>
+      fnGetAll();
+      async function calculateFibonacci() {
+        var number = parseInt(document.getElementById("idGenerate").value); 
+        
+        document.getElementById("txtSerie").innerHTML =
+          "Serie: " + (await fibo(number));
+      }
+
+
+      function getHeaders() {
+        return {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        };
+      }
+
+      async function fibo(n) {
+        const request = await fetch("http://localhost:8080/fibonacci/get/" + n, {
+          method: "GET",
+          headers: getHeaders(),
+        });
+
+        const sucesion = await request.json();
+        
+
+        return sucesion.s;
+      }
+
+      async function fnGetAll() {
+        const request = await fetch("http://localhost:8080/fibonacci/getAll", {
+          method: "GET",
+          headers: getHeaders(),
+        });
+
+        const sucesion = await request.json();
+
+
+
+        var root = document.getElementById('root');
+
+
+        sucesion.forEach(element => root.insertAdjacentHTML('beforebegin', `<tr id="class2"><td>${element.date}</td><td>${element.n}</td></tr>`));
+     
+        return sucesion;
+      }
+      
+
+      async function fnDelete() {
+        var number = parseInt(document.getElementById("idDelete").value); 
+        console.log(number);
+        const request = await fetch("http://localhost:8080/fibonacci/delete/" + number, {
+          method: "DELETE",
+          headers: getHeaders(),
+          
+        });
+        const sucesion2 = await request.text();
+        window.alert(sucesion2);
+      }
+
+      async function onDownload() {
+        const request = await fetch("http://localhost:8080/fibonacci/getAll", {
+          method: "GET",
+          headers: getHeaders(),
+        });
+        const sucesion = await request.json();
+        download(JSON.stringify(sucesion), "registros.json", "text/plain");
+       
+      }
+
+      function download(content, fileName, contentType) {
+		  const a = document.createElement("a");
+		  const file = new Blob([content], { type: contentType });
+		  a.href = URL.createObjectURL(file);
+		  a.download = fileName;
+		  a.click();
+		}
+    </script>
+  </head>
+  <div class="header">
+    <h1>Serie Fibonacci</h1>
+    <p>Creado por: Gustavo Martinez Licona</p>
+  </div>
+  <body>
+
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              Todos los registros
+             </h2>
+          </div>
+          <div class="container">
+            <button class="button-34"  style="margin-top:10px; " onclick="fnGetAll()" role="button">Registros anteriores</button>
+            <button class="button-34"  style="margin-top:10px;"  onclick="onDownload()" role="button">Descargar registros</button>
+            
+            <table class="styled-table">
+              <thead><tr><td><b>First name</b></td><td><b>Last Name</b></td></tr></thead>
+              <tr id="root"></tr>  
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              Generar serie
+             </h2>
+          </div>
+          <div class="container">
+           
+            <input type="number" id="idGenerate" placeholder="Ingresa numero...">
+            <button class="button-34"  onclick="calculateFibonacci()">Generar Fibonacci</button>
+            <h2 id="txtSerie"></h2>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              Eliminar registro
+             </h2>
+          </div>
+          <div class="container">
+            <input type="number" id="idDelete" placeholder="Ingresa numero...">
+
+            <button class="button-34" onclick="fnDelete()">Eliminar</button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

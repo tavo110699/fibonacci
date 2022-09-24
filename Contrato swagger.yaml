@@ -1,0 +1,56 @@
+openapi: 3.0.1
+info:
+  title: FIBONACCI API.
+  description: Desarrollar un servicio REST que calcule la serie de fibonacci, Recibir como parámetro el límite el cuál no podrá pasar el cálculo de dicha serie, Se debe guardar en un archivo cada petición válida recibida por el servicio, Se deben poder consultar los número enviados en peticiones anteriores, Se debe poder eliminar un registro de número enviados
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/fibonacci
+tags:
+- name: fibonacci
+  description:  control de los metodos y peticiones de fibonacci
+
+paths:
+  /delete/{n}:
+    delete:
+      tags:
+      - fibonacci
+      summary: Elimina el registro donde n sea igual al valor en el archivo JSON.
+      parameters:
+      - name: n
+        in: path
+        description: numero del registro a eliminar
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: [Eliminado con exito] / [No se encontro registro].
+
+
+    /get/{n}:
+    get:
+      tags:
+      - fibonacci
+      summary: Obtiene la serie Fibonacci.
+      parameters:
+      - name: n
+        in: path
+        description: Limite de la serie.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: [sucesion] / [Error, número negativo]. /  [Error, valor incorrecto]
+
+    /getAll:
+    get:
+      tags:
+      - fibonacci
+      summary: Obtiene todos los registros anteriores escritos en el archivo Json generado 
+      
+      responses:
+        200:
+          description: [sucesion]
+    
