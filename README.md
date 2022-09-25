@@ -28,7 +28,5 @@ como los archivos compilados (si apllica)
 
 
 
-##Ejecucion del proyecto
+## Ejecucion del proyecto
 Ejecutar java spring boot, uilizando mvn. esto dependera de IDE del programador, para Visual Studio Code isntalar los recursos necesarios de SpringBoot y Java, Buscar la clase principal, presionar click derecho , buscar la opcion Run Java o en su defecto mediane la opcion de Run and Debug
-
-
