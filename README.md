@@ -25,6 +25,7 @@ como los archivos compilados (si apllica)
 
 - manejo de interfaz grafica
 [http://localhost:8080/]
+![alt text](https://github.com/tavo110699/fibonacci/blob/main/img/Captura%20de%20Pantalla%202022-09-24%20a%20la(s)%2020.52.58.png?raw=true)
 
 
 
